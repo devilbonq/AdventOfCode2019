@@ -12,6 +12,7 @@ def get_manhattan_distance(inter_set):
     for z in inter_set:
         dist = int(abs(int(z.split(",")[0]))) + int(abs(int(z.split(",")[1])))
         distance_list.append(dist)
+    distance_list.sort()
     return distance_list
 
 
@@ -45,14 +46,7 @@ def function_a():
         else:
             wire_b = wire.split(",")
         pointer += 1
-    a_cords = create_map(wire_a)
-    b_cords = create_map(wire_b)
-    distance = get_manhattan_distance(a_cords.intersection(b_cords))
-    smallest_distance = distance[0]
-    for x in distance:
-        if x < smallest_distance:
-            smallest_distance = x
-    return smallest_distance, time()-start
+    return get_manhattan_distance(create_map(wire_a).intersection(create_map(wire_b)))[0], time()-start
 
 
 if __name__ == '__main__':
