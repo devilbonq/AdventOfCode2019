@@ -19,6 +19,7 @@ def analyze_optcode(optcode_list):
         pointer += 4
     return optcode_list[0]
 
+
 def function_a():
     start = time()
     input_file = read_file("input.txt")
@@ -43,9 +44,11 @@ def function_b():
             optcode_list[2] = verb
             while pointer < len(optcode_list) and int(optcode_list[pointer]) != 99:
                 if int(optcode_list[pointer]) == 1:
-                    optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) + int(optcode_list[int(optcode_list[pointer + 2])])
+                    optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) \
+                                                                   + int(optcode_list[int(optcode_list[pointer + 2])])
                 elif int(optcode_list[pointer]) == 2:
-                    optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) * int(optcode_list[int(optcode_list[pointer + 2])])
+                    optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) \
+                                                                   * int(optcode_list[int(optcode_list[pointer + 2])])
                 pointer += 4
             if int(optcode_list[0]) == 19690720:
                 return noun, verb, time() - start
@@ -65,4 +68,5 @@ if __name__ == '__main__':
     resultA, timeA = function_a()
     print("Optcode value: {}. Completed in {}.".format(resultA, timeA))
     resultB1, resultB2, timeB = function_b()
-    print("Noun: {} Verb: {} Answer: {}. Completed in {}.".format(resultB1, resultB2, 100*int(resultB1)+int(resultB2), timeB))
+    print("Noun: {} Verb: {} Answer: {}. Completed in {}.".format(resultB1, resultB2, 100*int(resultB1)+int(resultB2),
+                                                                  timeB))
