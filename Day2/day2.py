@@ -7,17 +7,25 @@ def read_file(input_file):
     return lines
 
 
+def optcode_runtime(optcode, optcode_list, pointer):
+    if optcode == 1:
+        optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) + int(
+            optcode_list[int(optcode_list[pointer + 2])])
+    elif optcode == 2:
+        optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) * int(
+            optcode_list[int(optcode_list[pointer + 2])])
+    return optcode_list
+
+
 def analyze_optcode(optcode_list):
     pointer = 0
     while pointer < len(optcode_list) and int(optcode_list[pointer]) != 99:
         if int(optcode_list[pointer]) == 1:
-            optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) + int(
-                optcode_list[int(optcode_list[pointer + 2])])
+            optcode_list = optcode_runtime(1, optcode_list, pointer)
         elif int(optcode_list[pointer]) == 2:
-            optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) * int(
-                optcode_list[int(optcode_list[pointer + 2])])
+            optcode_list = optcode_runtime(2, optcode_list, pointer)
         pointer += 4
-    return optcode_list[0]
+    return int(optcode_list[0])
 
 
 def function_a():
@@ -42,15 +50,7 @@ def function_b():
             optcode_list = input_file[0].split(",")
             optcode_list[1] = noun
             optcode_list[2] = verb
-            while pointer < len(optcode_list) and int(optcode_list[pointer]) != 99:
-                if int(optcode_list[pointer]) == 1:
-                    optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) \
-                                                                   + int(optcode_list[int(optcode_list[pointer + 2])])
-                elif int(optcode_list[pointer]) == 2:
-                    optcode_list[int(optcode_list[pointer + 3])] = int(optcode_list[int(optcode_list[pointer + 1])]) \
-                                                                   * int(optcode_list[int(optcode_list[pointer + 2])])
-                pointer += 4
-            if int(optcode_list[0]) == 19690720:
+            if analyze_optcode(optcode_list) == 19690720:
                 return noun, verb, time() - start
             elif verb == 99:
                 break
